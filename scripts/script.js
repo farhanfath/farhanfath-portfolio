@@ -96,7 +96,7 @@ const projects = [
             "Featured in Bangkit Academy showcase",
             "10,000+ downloads in beta testing"
         ],
-        image: "../assets/glowfy-app.png"
+        image: "..assets/glowfy-app.png"
     },
     {
         id: 2,
@@ -127,7 +127,7 @@ const projects = [
             "Clean architecture implementation",
             "Excellent performance optimization"
         ],
-        image: "../assets/newsphere-app.png"
+        image: "..assets/newsphere-app.png"
     },
     {
         id: 3,
@@ -158,7 +158,7 @@ const projects = [
             "Community impact recognition",
             "Sustainable development goals alignment"
         ],
-        image: "../assets/eparenting-app.png"
+        image: "assets/eparenting-app.png"
     },
     {
         id: 4,
