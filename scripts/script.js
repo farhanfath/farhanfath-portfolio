@@ -3,35 +3,10 @@ import { populateExperiences, setupExperienceToggle } from './controller/experie
 import { populateProjects, setupProjectFilters, setupProjectModal, setupProjectsToggle } from './controller/project-controller.js';
 import { setupAboutToggle } from './controller/about-controller.js';
 import { typeWriter } from './controller/typing-text-controller.js';
+import { navigationController } from './controller/navigation-controller.js';
 
 // Initialize Lucide icons
 lucide.createIcons();
-
-// Dark mode functionality
-const themeToggle = document.getElementById('theme-toggle');
-const themeToggleMobile = document.getElementById('theme-toggle-mobile');
-const html = document.documentElement;
-
-const currentTheme = localStorage.getItem('theme') || 'light';
-html.classList.toggle('dark', currentTheme === 'dark');
-
-function toggleTheme() {
-    html.classList.toggle('dark');
-    const isDark = html.classList.contains('dark');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    lucide.createIcons();
-}
-
-themeToggle.addEventListener('click', toggleTheme);
-themeToggleMobile.addEventListener('click', toggleTheme);
-
-// Mobile menu toggle
-const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-const mobileMenu = document.getElementById('mobile-menu');
-
-mobileMenuBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-});
 
 // Show more/less functionality
 function setupToggleButtons() {
@@ -40,21 +15,6 @@ function setupToggleButtons() {
     setupProjectsToggle();
     setupCertificatesToggle();
 }
-
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-            mobileMenu.classList.add('hidden');
-        }
-    });
-});
 
 // Intersection Observer for fade-in animations
 const observerOptions = {
@@ -93,33 +53,14 @@ ${message}`);
     this.reset();
 });
 
-// Active navigation highlighting
-window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    let current = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (scrollY >= (sectionTop - 200)) {
-            current = section.getAttribute('id');
-        }
-    });
-
-    navLinks.forEach(link => {
-        link.classList.remove('text-primary');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('text-primary');
-        }
-    });
-});
-
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Start typing animation
     setTimeout(typeWriter, 1000);
     
+    // Initialize navigation controller
+    navigationController();
+
     // Populate sections
     populateExperiences();
     populateProjects();

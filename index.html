@@ -13,7 +13,7 @@
 </head>
 <body class="bg-gray-50 dark:bg-dark-bg transition-colors duration-300">
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full bg-white/95 dark:bg-dark-bg/95 backdrop-blur-md z-50 shadow-sm transition-all duration-300 hover:shadow-lg">
+    <nav id="main-nav" class="fixed top-0 w-full bg-white/95 dark:bg-dark-bg/95 backdrop-blur-md z-50 shadow-sm transition-all duration-500 hover:shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
                 <div class="text-2xl font-bold text-gray-900 dark:text-dark-text hover:scale-105 transition-transform duration-300 cursor-pointer">
@@ -56,6 +56,11 @@
         </div>
     </nav>
 
+    <!-- Go to Top Button -->
+    <button id="go-to-top" class="go-to-top-hidden fixed bottom-8 right-8 z-40 p-4 bg-primary hover:bg-gray-600 dark:bg-white dark:hover:bg-gray-200 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group">
+        <i data-lucide="arrow-up" class="w-6 h-6 group-hover:scale-110 transition-transform duration-200 dark:stroke-black"></i>
+    </button>
+
     <!-- Hero Section -->
     <section id="home" class="min-h-screen gradient-bg flex items-center justify-center relative overflow-hidden interactive-bg">
         <div class="absolute inset-0 bg-black/30"></div>
@@ -69,13 +74,6 @@
         </div>
         
         <div class="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
-            <div class="floating mb-8">
-                <div class="w-40 h-40 mx-auto rounded-full glass-effect flex items-center justify-center hover:scale-110 transition-transform duration-500 cursor-pointer">
-                    <!-- <i data-lucide="user" class="w-20 h-20 animate-pulse"></i> -->
-                     <img src="assets/me.webp" alt="farhanfath-image" class="absolute inset-0 w-full h-full object-cover rounded-t-xl">
-                </div>
-            </div>
-            
             <h1 class="text-5xl md:text-7xl font-black mb-6 fade-in leading-tight">
                 <span class="block animate-fade-in-down">Muhammad Farhan</span>
                 <span class="block animate-fade-in-up animation-delay-300">Fathurrohman</span>

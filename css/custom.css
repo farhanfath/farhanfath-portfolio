@@ -2,6 +2,21 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
+/* navigation-style-start */
+.nav-hidden {
+    transform: translateY(-100%);
+}
+
+.go-to-top-hidden {
+    transform: translateY(100px);
+    opacity: 0;
+}
+
+.scroll-smooth {
+    scroll-behavior: smooth;
+}
+/* navigation-style-end */
+
 .gradient-bg {
     background: linear-gradient(135deg, #000000 0%, #374151 100%);
 }

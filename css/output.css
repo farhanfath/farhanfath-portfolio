@@ -8,6 +8,7 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --color-green-500: oklch(72.3% 0.219 149.579);
+    --color-blue-600: oklch(54.6% 0.245 262.881);
     --color-gray-50: oklch(98.5% 0.002 247.839);
     --color-gray-100: oklch(96.7% 0.003 264.542);
     --color-gray-200: oklch(92.8% 0.006 264.531);
@@ -251,6 +252,9 @@
   .right-5 {
     right: calc(var(--spacing) * 5);
   }
+  .right-8 {
+    right: calc(var(--spacing) * 8);
+  }
   .right-20 {
     right: calc(var(--spacing) * 20);
   }
@@ -289,6 +293,9 @@
   }
   .z-20 {
     z-index: 20;
+  }
+  .z-40 {
+    z-index: 40;
   }
   .z-50 {
     z-index: 50;
@@ -347,9 +354,6 @@
   .mt-16 {
     margin-top: calc(var(--spacing) * 16);
   }
-  .mt-auto {
-    margin-top: auto;
-  }
   .mr-2 {
     margin-right: calc(var(--spacing) * 2);
   }
@@ -397,9 +401,6 @@
   }
   .inline {
     display: inline;
-  }
-  .inline-block {
-    display: inline-block;
   }
   .inline-flex {
     display: inline-flex;
@@ -1008,10 +1009,6 @@
     font-size: var(--text-5xl);
     line-height: var(--tw-leading, var(--text-5xl--line-height));
   }
-  .text-base {
-    font-size: var(--text-base);
-    line-height: var(--tw-leading, var(--text-base--line-height));
-  }
   .text-lg {
     font-size: var(--text-lg);
     line-height: var(--tw-leading, var(--text-lg--line-height));
@@ -1573,6 +1570,13 @@
       }
     }
   }
+  .hover\:bg-blue-600 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-blue-600);
+      }
+    }
+  }
   .hover\:bg-gray-50 {
     &:hover {
       @media (hover: hover) {
@@ -1591,6 +1595,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-gray-300);
+      }
+    }
+  }
+  .hover\:bg-gray-600 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-gray-600);
       }
     }
   }
@@ -1866,6 +1877,16 @@
       --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
     }
   }
+  .dark\:stroke-black {
+    @media (prefers-color-scheme: dark) {
+      stroke: var(--color-black);
+    }
+  }
+  .dark\:stroke-gray-200 {
+    @media (prefers-color-scheme: dark) {
+      stroke: var(--color-gray-200);
+    }
+  }
   .dark\:text-black {
     @media (prefers-color-scheme: dark) {
       color: var(--color-black);
@@ -2008,6 +2029,15 @@
       &:hover {
         @media (hover: hover) {
           background-color: var(--color-gray-200);
+        }
+      }
+    }
+  }
+  .dark\:hover\:bg-gray-500 {
+    @media (prefers-color-scheme: dark) {
+      &:hover {
+        @media (hover: hover) {
+          background-color: var(--color-gray-500);
         }
       }
     }
