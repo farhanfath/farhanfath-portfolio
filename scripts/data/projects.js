@@ -252,8 +252,21 @@ export const projects = [
             "pricing management for bookings",
         ],
         technologies: ["Laravel", "Filament", "Livewire", "Bootstrap", "MySQL", "PHP", "JavaScript", "HTML", "CSS", "jQuery"],
-        image: "",
+        image: "assets/projects/fourfold-web.png",
         codeUrl: "https://github.com/farhanfath/Laravel-fourfold-organizer",
-        gallery: []
+        gallery: [
+            "assets/projects/fourfold/1.png",
+            "assets/projects/fourfold/2.png",
+            "assets/projects/fourfold/3.png",
+            "assets/projects/fourfold/4.png",
+            "assets/projects/fourfold/5.png",
+            "assets/projects/fourfold/6.png",
+            "assets/projects/fourfold/7.png",
+            "assets/projects/fourfold/8.png",
+            "assets/projects/fourfold/9.png",
+            "assets/projects/fourfold/10.png",
+            "assets/projects/fourfold/11.png",
+            "assets/projects/fourfold/12.png"
+        ]
     },
 ];
