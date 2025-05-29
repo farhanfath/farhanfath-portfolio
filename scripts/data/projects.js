@@ -27,8 +27,15 @@ export const projects = [
             "Scalable cloud architecture implementation",
             "Featured in Bangkit Academy showcase",
         ],
-        image: "assets/glowfy-app.png",
+        image: "assets/projects/glowfy-app.png",
         codeUrl: "https://github.com/farhanfath/glowfy",
+        gallery: [
+            "https://placehold.co/400x600/4285F4/ffffff?text=Glowfy+Home",
+            "https://placehold.co/1080x1920/34A853/ffffff?text=Camera+Scan",
+            "https://placehold.co/1080x1920/EA4335/ffffff?text=Results",
+            "https://placehold.co/1080x1920/FBBC04/ffffff?text=History",
+            "https://placehold.co/1080x1920/9C27B0/ffffff?text=Profile"
+        ]
     },
     {
         id: 2,
@@ -59,7 +66,7 @@ export const projects = [
             "Clean architecture implementation",
             "Excellent performance optimization"
         ],
-        image: "assets/newsphere-app.png",
+        image: "assets/projects/newsphere-app.png",
         codeUrl: "https://github.com/",
     },
     {
@@ -91,7 +98,7 @@ export const projects = [
             "Community impact recognition",
             "Sustainable development goals alignment"
         ],
-        image: "assets/eparenting-app.png",
+        image: "assets/projects/eparenting-app.png",
         codeUrl: "https://github.com/farhanfath/glowfy",
     },
     {

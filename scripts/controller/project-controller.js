@@ -204,9 +204,123 @@ function setupProjectModal() {
                 } else {
                     liveDemoBtn.classList.add('hidden');
                 }
+
+
+                // gallery tab section
+                const galleryContainer = document.getElementById('modal-gallery');
+                if (project.gallery && project.gallery.length > 0) {
+                    galleryContainer.innerHTML = project.gallery.map((image, index) => `
+                        <div 
+                            class="relative overflow-hidden rounded-xl cursor-pointer aspect-[3/4] transform transition duration-300 hover:scale-105 hover:shadow-xl group" 
+                            data-index="${index}">
+                            
+                            <img 
+                                src="${image}" 
+                                alt="${project.title} Screenshot ${index + 1}" 
+                                loading="lazy" 
+                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                            
+                            <div 
+                                class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <i data-lucide="zoom-in" class="w-8 h-8 text-white"></i>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    galleryContainer.innerHTML = `
+                        <div class="col-span-full text-center py-12">
+                            <i data-lucide="image-off" class="w-16 h-16 text-gray-400 mx-auto mb-4"></i>
+                            <p class="text-gray-500 dark:text-gray-400 text-lg">No gallery images available for this project</p>
+                        </div>
+                    `;
+                }
+
+                // Setup lightbox functionality
+                setupLightbox(project.gallery || []);
             }
         }
     });
+}
+
+function setupLightbox(images) {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+    const lightboxPrev = document.getElementById('lightbox-prev');
+    const lightboxNext = document.getElementById('lightbox-next');
+    const lightboxCounter = document.getElementById('lightbox-counter');
+    const galleryItems = document.querySelectorAll('[data-index]');
+
+    let currentIndex = 0;
+
+    function showImage(index) {
+        if (images.length === 0) return;
+
+        currentIndex = index;
+        lightboxImg.src = images[currentIndex];
+        lightboxCounter.textContent = `${currentIndex + 1} / ${images.length}`;
+        lightbox.classList.add('opacity-100', 'visible');
+        lightbox.classList.remove('opacity-0', 'invisible');
+        lightboxImg.classList.add('opacity-100');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function hideImage() {
+        lightbox.classList.remove('opacity-100', 'visible');
+        lightbox.classList.add('opacity-0', 'invisible');
+        lightboxImg.classList.remove('opacity-100');
+        document.body.style.overflow = 'auto';
+    }
+
+
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+    }
+
+    function prevImage() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage(currentIndex);
+    }
+
+    // Event listeners
+    galleryItems.forEach((item, index) => {
+        item.addEventListener('click', () => showImage(index));
+    });
+
+    lightboxClose.addEventListener('click', hideImage);
+    lightboxNext.addEventListener('click', nextImage);
+    lightboxPrev.addEventListener('click', prevImage);
+
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) hideImage();
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('active')) return;
+
+        switch (e.key) {
+            case 'Escape':
+                hideImage();
+                break;
+            case 'ArrowLeft':
+                prevImage();
+                break;
+            case 'ArrowRight':
+                nextImage();
+                break;
+        }
+    });
+
+    // Hide navigation if only one image
+    if (images.length <= 1) {
+        lightboxPrev.style.display = 'none';
+        lightboxNext.style.display = 'none';
+    } else {
+        lightboxPrev.style.display = 'flex';
+        lightboxNext.style.display = 'flex';
+    }
 }
 
 export { populateProjects, setupProjectFilters, setupProjectModal };
