@@ -11,7 +11,7 @@ function populateExperiences() {
         expElement.style.setProperty('--stagger', index);
         expElement.innerHTML = `
             <div class="flex items-start space-x-6 mb-6">
-                <div class="company-logo group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 flex items-center justify-center rounded-full w-16 h-16" style="background-color: bg-white">
+                <div class="company-logo group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 flex items-center justify-center rounded-full w-16 h-16" style="background-color: ${exp.color || '#E5E7EB'}">
                     ${/\.(png|jpe?g|svg)$/.test(exp.logo)
                         ? `<img src="${exp.logo}" alt="${exp.company} logo" class="w-10 h-10 object-contain">`
                         : `<span class="text-white font-bold text-xl">${exp.logo}</span>`
@@ -46,7 +46,17 @@ function populateExperiences() {
 
 function setupExperienceToggle() {
     const experienceToggle = document.getElementById('experience-toggle');
+    const experienceSection = document.getElementById('experience');
     let experienceExpanded = false;
+
+    function scrollToExperience() {
+        if (experienceSection) {
+            experienceSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }
 
     experienceToggle.addEventListener('click', () => {
         experienceExpanded = !experienceExpanded;
@@ -59,6 +69,13 @@ function setupExperienceToggle() {
             visibleExperiences.forEach((exp, index) => {
                 if (index >= 3) exp.classList.add('hidden');
             });
+        }
+
+        if (!experienceExpanded) {
+            // Delay sedikit untuk memberikan waktu animasi hide projects selesai
+            setTimeout(() => {
+                scrollToExperience();
+            }, 100);
         }
 
         experienceToggle.querySelector('.show-more').classList.toggle('hidden', experienceExpanded);

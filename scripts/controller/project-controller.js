@@ -3,6 +3,7 @@ import { projects } from '../data/projects.js';
 
 function setupProjectsToggle() {
     const projectsToggle = document.getElementById('projects-toggle');
+    const projectsSection = document.getElementById('projects'); // Ambil reference ke section projects
     let projectsExpanded = false;
     const visibleCount = 6;
 
@@ -72,10 +73,28 @@ function setupProjectsToggle() {
         }
     }
 
+    // Function to smooth scroll to projects section
+    function scrollToProjects() {
+        if (projectsSection) {
+            projectsSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }
+
     // Toggle button click handler
     projectsToggle.addEventListener('click', () => {
         projectsExpanded = !projectsExpanded;
         applyShowMoreLess();
+        
+        // Smooth scroll ke atas saat show less diklik
+        if (!projectsExpanded) {
+            // Delay sedikit untuk memberikan waktu animasi hide projects selesai
+            setTimeout(() => {
+                scrollToProjects();
+            }, 100);
+        }
     });
 
     // Reset expansion state when filter changes
@@ -100,7 +119,6 @@ function setupProjectFilters() {
     
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            const filter = btn.getAttribute('data-filter');
             
             // Update active filter button
             filterBtns.forEach(b => b.classList.remove('active'));
@@ -195,12 +213,14 @@ function setupProjectModal() {
     // Close modal
     closeBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+            modal.classList.remove('flex');
             modal.classList.add('hidden');
         });
     });
     
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
+            modal.classList.remove('flex');
             modal.classList.add('hidden');
         }
     });
@@ -270,6 +290,7 @@ function setupProjectModal() {
                 
                 lucide.createIcons();
                 modal.classList.remove('hidden');
+                modal.classList.add('flex');
 
                 // view code and live demo links
                 const viewCodeBtn = document.getElementById('view-code-btn');
@@ -607,29 +628,5 @@ function setupLightbox(images) {
 
     updateZoomDisplay();
 }
-
-// function setupProjectsToggle() {
-//     const projectsToggle = document.getElementById('projects-toggle');
-//     let projectsExpanded = false;
-
-//     projectsToggle.addEventListener('click', () => {
-//         projectsExpanded = !projectsExpanded;
-//         const hiddenProjects = document.querySelectorAll('.project-card.hidden');
-//         const visibleProjects = document.querySelectorAll('.project-card:not(.hidden)');
-
-//         if (projectsExpanded) {
-//             hiddenProjects.forEach(project => project.classList.remove('hidden'));
-//         } else {
-//             visibleProjects.forEach((project, index) => {
-//                 if (index >= 6) project.classList.add('hidden');
-//             });
-//         }
-
-//         projectsToggle.querySelector('.show-more').classList.toggle('hidden', projectsExpanded);
-//         projectsToggle.querySelector('.show-less').classList.toggle('hidden', !projectsExpanded);
-//         projectsToggle.querySelector('.show-more-icon').classList.toggle('hidden', projectsExpanded);
-//         projectsToggle.querySelector('.show-less-icon').classList.toggle('hidden', !projectsExpanded);
-//     });
-// }
 
 export { populateProjects, setupProjectFilters, setupProjectModal, setupProjectsToggle };

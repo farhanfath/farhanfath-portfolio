@@ -1,6 +1,17 @@
 // Experience data with company logos
 export const experiences = [
     {
+        title: "Android Engineer Intern",
+        company: "Alfagift - Global Loyalty Indonesia",
+        period: "Feb 2025 - Present",
+        logo: "assets/company-logo/alfagift-icon.png",
+        "achievements": [
+            "Conducted R&D and implemented a Shopping Assistant feature using n8n to deliver personalized product recommendations within the app",
+            "Developed and integrated a 21+ age-restricted product verification system using Clean Architecture to ensure maintainability and scalability",
+        ],
+        color: "#EA2729"
+    },
+    {
         title: "IT Infrastructure Support Engineer",
         company: "Lembaga Pengembangan Komputerisasi Gunadarma",
         period: "Sep 2024 - Present",
@@ -9,6 +20,17 @@ export const experiences = [
             "Managed 7 servers, 144 thin clients, and virtual machines using VMware/vSphere",
             "Administered user accounts, access controls, and system reliability",
             "Updated course materials on Moodle and maintained hardware across training facilities"
+        ]
+    },
+    {
+        title: "Mobile Development Intern",
+        company: "Lembaga Layanan Pendidikan Tinggi Wilayah III",
+        period: "Sep 2024 - Jan 2024",
+        logo: "assets/company-logo/lldikti-icon.png",
+        achievements: [
+            "Designed and developed Android app featuring parenting modules and community platforms",
+            "Conducted field research and gathered feedback from 80% of community members",
+            "Collaborated remotely and on-site, ensuring 100% on-time project delivery"
         ]
     },
     {
@@ -42,17 +64,6 @@ export const experiences = [
             "Completed intensive Kotlin and API integration program with 84.75% score",
             "Ranked in top 10% of cohort and received Certificate of Achievement",
             "Developed news application with NewsAPI, increasing engagement by 50%"
-        ]
-    },
-    {
-        title: "Mobile Development Intern",
-        company: "Lembaga Layanan Pendidikan Tinggi Wilayah III",
-        period: "Sep 2024 - Jan 2024",
-        logo: "assets/company-logo/lldikti-icon.png",
-        achievements: [
-            "Designed and developed Android app featuring parenting modules and community platforms",
-            "Conducted field research and gathered feedback from 80% of community members",
-            "Collaborated remotely and on-site, ensuring 100% on-time project delivery"
         ]
     }
 ];

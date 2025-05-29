@@ -42,7 +42,17 @@ function populateCertificates() {
 
 function setupCertificatesToggle() {
     const certificatesToggle = document.getElementById('certificates-toggle');
+    const certificatesSection = document.getElementById('certifications');
     let certificatesExpanded = false;
+
+    function scrollToCertificates() {
+        if (certificatesSection) {
+            certificatesSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }
 
     certificatesToggle.addEventListener('click', () => {
         certificatesExpanded = !certificatesExpanded;
@@ -55,6 +65,14 @@ function setupCertificatesToggle() {
             visibleCertificates.forEach((cert, index) => {
                 if (index >= 3) cert.classList.add('hidden');
             });
+        }
+
+        // Smooth scroll ke atas saat show less diklik
+        if (!certificatesExpanded) {
+            // Delay sedikit untuk memberikan waktu animasi hide projects selesai
+            setTimeout(() => {
+                scrollToCertificates();
+            }, 100);
         }
 
         certificatesToggle.querySelector('.show-more').classList.toggle('hidden', certificatesExpanded);
