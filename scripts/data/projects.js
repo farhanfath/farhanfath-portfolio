@@ -54,6 +54,8 @@ export const projects = [
         features: [
             "Personalized travel recommendations",
             "AI assistant for travel planning",
+            "customer service multiplatform call integration",
+            "Location-based suggestions",
             "User-friendly interface with Material Design",
             "Integration with Google Maps for location services",
             "Bookmarking favorite destinations",
