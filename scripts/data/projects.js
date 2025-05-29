@@ -269,4 +269,39 @@ export const projects = [
             "assets/projects/fourfold/12.png"
         ]
     },
+    {
+        id: 10,
+        title: "TripMate - Travel Companion App",
+        subtitle: "Travel Companion App with travel recommendations AI Assistant",
+        category: "android",
+        tags: ["Kotlin", "AI Assistant", "Travel Recommendations"],
+        description: "A travel companion app that provides personalized travel recommendations and AI assistant features.",
+        fullDescription: "TripMate is a travel companion app that provides personalized travel recommendations and AI assistant features. The app uses AI Agent to analyze user preferences and suggest travel destinations, activities, and accommodations.",
+        duration: "2 months",
+        teamSize: "1 developers",
+        features: [
+            "Personalized travel recommendations",
+            "AI assistant for travel planning",
+            "User-friendly interface with Material Design",
+            "Integration with Google Maps for location services",
+            "Bookmarking favorite destinations",
+            "User reviews and ratings for destinations",
+            "Nearby attractions and activities",
+            "Multi-language support"
+        ],
+        technologies: ["Android SDK", "Kotlin", "Jetpack Compose", "Google Maps API", "Gemini API", "N8n", "Firebase", "Room Database", "Retrofit", "GeoAPI", "Material3"],
+        image: "assets/projects/tripmate-app.png",
+        codeUrl: "https://github.com/farhanfath/TripMate",
+        gallery: [
+            "assets/projects/tripmate/1.jpg",
+            "assets/projects/tripmate/2.jpg",
+            "assets/projects/tripmate/3.jpg",
+            "assets/projects/tripmate/4.jpg",
+            "assets/projects/tripmate/5.jpg",
+            "assets/projects/tripmate/6.jpg",
+            "assets/projects/tripmate/7.jpg",
+            "assets/projects/tripmate/8.jpg",
+            "assets/projects/tripmate/9.jpg",
+        ]
+    },
 ];
