@@ -1,6 +1,9 @@
-import { populateCertificates } from './controller/certificate-controller.js';
-import { populateExperiences } from './controller/experience-controller.js';
-import { populateProjects, setupProjectFilters, setupProjectModal } from './controller/project-controller.js';
+import { populateCertificates, setupCertificatesToggle } from './controller/certificate-controller.js';
+import { populateExperiences, setupExperienceToggle } from './controller/experience-controller.js';
+import { populateProjects, setupProjectFilters, setupProjectModal, setupProjectsToggle } from './controller/project-controller.js';
+import { setupAboutToggle } from './controller/about-controller.js';
+import { typeWriter } from './controller/typing-text-controller.js';
+
 // Initialize Lucide icons
 lucide.createIcons();
 
@@ -32,92 +35,10 @@ mobileMenuBtn.addEventListener('click', () => {
 
 // Show more/less functionality
 function setupToggleButtons() {
-    // About section toggle
-    const aboutToggle = document.getElementById('about-toggle');
-    const aboutText = document.getElementById('about-text');
-    const fullAboutText = "Computer Science undergraduate at Gunadarma University with practical experience in Android development using Kotlin and Jetpack Compose. Actively engaged in projects and internships that focus on creating user-friendly applications. Keen to further develop professional skills in a dynamic tech environment. Passionate about mobile development, machine learning, and system administration. Always eager to learn new technologies and contribute to innovative projects that make a positive impact on society.";
-    const shortAboutText = "Computer Science undergraduate at Gunadarma University with practical experience in Android development using Kotlin and Jetpack Compose. Actively engaged in projects and internships that focus on creating user-friendly applications...";
-    
-    let aboutExpanded = false;
-    aboutText.textContent = shortAboutText;
-    
-    aboutToggle.addEventListener('click', () => {
-        aboutExpanded = !aboutExpanded;
-        aboutText.textContent = aboutExpanded ? fullAboutText : shortAboutText;
-        aboutToggle.querySelector('.show-more').classList.toggle('hidden', aboutExpanded);
-        aboutToggle.querySelector('.show-less').classList.toggle('hidden', !aboutExpanded);
-        aboutToggle.querySelector('.show-more-icon').classList.toggle('hidden', aboutExpanded);
-        aboutToggle.querySelector('.show-less-icon').classList.toggle('hidden', !aboutExpanded);
-    });
-    
-    // Experience section toggle
-    const experienceToggle = document.getElementById('experience-toggle');
-    let experienceExpanded = false;
-    
-    experienceToggle.addEventListener('click', () => {
-        experienceExpanded = !experienceExpanded;
-        const hiddenExperiences = document.querySelectorAll('.experience-item.hidden');
-        const visibleExperiences = document.querySelectorAll('.experience-item:not(.hidden)');
-        
-        if (experienceExpanded) {
-            hiddenExperiences.forEach(exp => exp.classList.remove('hidden'));
-        } else {
-            visibleExperiences.forEach((exp, index) => {
-                if (index >= 3) exp.classList.add('hidden');
-            });
-        }
-        
-        experienceToggle.querySelector('.show-more').classList.toggle('hidden', experienceExpanded);
-        experienceToggle.querySelector('.show-less').classList.toggle('hidden', !experienceExpanded);
-        experienceToggle.querySelector('.show-more-icon').classList.toggle('hidden', experienceExpanded);
-        experienceToggle.querySelector('.show-less-icon').classList.toggle('hidden', !experienceExpanded);
-    });
-    
-    // Projects section toggle
-    const projectsToggle = document.getElementById('projects-toggle');
-    let projectsExpanded = false;
-    
-    projectsToggle.addEventListener('click', () => {
-        projectsExpanded = !projectsExpanded;
-        const hiddenProjects = document.querySelectorAll('.project-card.hidden');
-        const visibleProjects = document.querySelectorAll('.project-card:not(.hidden)');
-        
-        if (projectsExpanded) {
-            hiddenProjects.forEach(project => project.classList.remove('hidden'));
-        } else {
-            visibleProjects.forEach((project, index) => {
-                if (index >= 6) project.classList.add('hidden');
-            });
-        }
-        
-        projectsToggle.querySelector('.show-more').classList.toggle('hidden', projectsExpanded);
-        projectsToggle.querySelector('.show-less').classList.toggle('hidden', !projectsExpanded);
-        projectsToggle.querySelector('.show-more-icon').classList.toggle('hidden', projectsExpanded);
-        projectsToggle.querySelector('.show-less-icon').classList.toggle('hidden', !projectsExpanded);
-    });
-
-    // Certificates section toggle
-    const certificatesToggle = document.getElementById('certificates-toggle');
-    let certificatesExpanded = false;
-    
-    certificatesToggle.addEventListener('click', () => {
-        certificatesExpanded = !certificatesExpanded;
-        const hiddenCertificates = document.querySelectorAll('.certificate-card.hidden');
-        const visibleCertificates = document.querySelectorAll('.certificate-card:not(.hidden)');
-        
-        if (certificatesExpanded) {
-            hiddenCertificates.forEach(cert => cert.classList.remove('hidden'));
-        } else {
-            visibleCertificates.forEach((cert, index) => {
-                if (index >= 3) cert.classList.add('hidden');
-            });
-        }
-        
-        certificatesToggle.querySelector('.show-more').classList.toggle('hidden', certificatesExpanded);
-        certificatesToggle.querySelector('.show-less').classList.toggle('hidden', !certificatesExpanded);
-        certificatesToggle.querySelector('.show-more-icon').classList.toggle('hidden', certificatesExpanded);
-        certificatesToggle.querySelector('.show-less-icon').classList.toggle('hidden', !certificatesExpanded);
-    });
+    setupAboutToggle();
+    setupExperienceToggle();
+    setupProjectsToggle();
+    setupCertificatesToggle();
 }
 
 // Smooth scrolling for navigation links
@@ -134,43 +55,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
-
-// Typing animation
-const typingText = document.getElementById('typing-text');
-const texts = [
-    'Mobile Developer & IT Infrastructure Engineer',
-    'Android Developer with Kotlin & Jetpack Compose',
-    'Course Instructor & Technology Enthusiast',
-    'Computer Science Student at Gunadarma University'
-];
-let textIndex = 0;
-let charIndex = 0;
-let isDeleting = false;
-
-function typeWriter() {
-    const currentText = texts[textIndex];
-    
-    if (isDeleting) {
-        typingText.textContent = currentText.substring(0, charIndex - 1);
-        charIndex--;
-    } else {
-        typingText.textContent = currentText.substring(0, charIndex + 1);
-        charIndex++;
-    }
-
-    let typeSpeed = isDeleting ? 50 : 100;
-
-    if (!isDeleting && charIndex === currentText.length) {
-        typeSpeed = 2000;
-        isDeleting = true;
-    } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        textIndex = (textIndex + 1) % texts.length;
-        typeSpeed = 500;
-    }
-
-    setTimeout(typeWriter, typeSpeed);
-}
 
 // Intersection Observer for fade-in animations
 const observerOptions = {

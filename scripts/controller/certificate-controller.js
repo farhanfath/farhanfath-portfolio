@@ -1,7 +1,7 @@
 import { certificates } from "../data/certificates.js";
 
 // Populate certificates section
-export function populateCertificates() {
+function populateCertificates() {
     const container = document.getElementById('certificates-container');
     const visibleCount = 3;
     
@@ -35,3 +35,29 @@ export function populateCertificates() {
     
     lucide.createIcons();
 }
+
+function setupCertificatesToggle() {
+    const certificatesToggle = document.getElementById('certificates-toggle');
+    let certificatesExpanded = false;
+
+    certificatesToggle.addEventListener('click', () => {
+        certificatesExpanded = !certificatesExpanded;
+        const hiddenCertificates = document.querySelectorAll('.certificate-card.hidden');
+        const visibleCertificates = document.querySelectorAll('.certificate-card:not(.hidden)');
+
+        if (certificatesExpanded) {
+            hiddenCertificates.forEach(cert => cert.classList.remove('hidden'));
+        } else {
+            visibleCertificates.forEach((cert, index) => {
+                if (index >= 3) cert.classList.add('hidden');
+            });
+        }
+
+        certificatesToggle.querySelector('.show-more').classList.toggle('hidden', certificatesExpanded);
+        certificatesToggle.querySelector('.show-less').classList.toggle('hidden', !certificatesExpanded);
+        certificatesToggle.querySelector('.show-more-icon').classList.toggle('hidden', certificatesExpanded);
+        certificatesToggle.querySelector('.show-less-icon').classList.toggle('hidden', !certificatesExpanded);
+    });
+}
+
+export { populateCertificates, setupCertificatesToggle };

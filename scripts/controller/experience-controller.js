@@ -1,7 +1,7 @@
 import { experiences } from '../data/experiences.js'; 
 
 // Populate experience section
-export function populateExperiences() {
+function populateExperiences() {
     const container = document.getElementById('experience-container');
     const visibleCount = 3;
     
@@ -43,3 +43,29 @@ export function populateExperiences() {
     
     lucide.createIcons();
 }
+
+function setupExperienceToggle() {
+    const experienceToggle = document.getElementById('experience-toggle');
+    let experienceExpanded = false;
+
+    experienceToggle.addEventListener('click', () => {
+        experienceExpanded = !experienceExpanded;
+        const hiddenExperiences = document.querySelectorAll('.experience-item.hidden');
+        const visibleExperiences = document.querySelectorAll('.experience-item:not(.hidden)');
+
+        if (experienceExpanded) {
+            hiddenExperiences.forEach(exp => exp.classList.remove('hidden'));
+        } else {
+            visibleExperiences.forEach((exp, index) => {
+                if (index >= 3) exp.classList.add('hidden');
+            });
+        }
+
+        experienceToggle.querySelector('.show-more').classList.toggle('hidden', experienceExpanded);
+        experienceToggle.querySelector('.show-less').classList.toggle('hidden', !experienceExpanded);
+        experienceToggle.querySelector('.show-more-icon').classList.toggle('hidden', experienceExpanded);
+        experienceToggle.querySelector('.show-less-icon').classList.toggle('hidden', !experienceExpanded);
+    });
+}
+
+export {  populateExperiences, setupExperienceToggle };

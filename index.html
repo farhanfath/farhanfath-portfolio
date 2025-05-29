@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Muhammad Farhan Fathurrohman - Portfolio</title>
+    <link rel="icon" href="assets/logo.svg" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -16,7 +17,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
                 <div class="text-2xl font-bold text-gray-900 dark:text-dark-text hover:scale-105 transition-transform duration-300 cursor-pointer">
-                    Farhan
+                    Farhan Fathur
                 </div>
                 <div class="hidden md:flex space-x-8 items-center">
                     <a href="#home" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Home</a>
@@ -84,19 +85,19 @@
             </p>
             
             <div class="flex flex-col sm:flex-row gap-6 justify-center fade-in items-center">
-                <a href="#contact" class="group bg-white text-gray-900 px-10 py-4 rounded-full font-bold hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-2xl flex items-center space-x-2">
-                    <span>Get In Touch</span>
-                    <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
-                </a>
-                <a href="#projects" class="group border-3 border-white text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-gray-900 transition-all duration-300 hover:scale-105 hover:shadow-2xl flex items-center space-x-2">
+                <a href="#projects" class="group bg-white text-gray-900 px-10 py-4 rounded-full font-bold hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-2xl flex items-center space-x-2">
                     <span>View My Work</span>
-                    <i data-lucide="external-link" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+                    <i data-lucide="external-link" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="assets/cv/CV - ATS Muhammad Farhan Fathurrohman.pdf" target="_blank" class="group border-3 border-white text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-gray-900 transition-all duration-300 hover:scale-105 hover:shadow-2xl flex items-center space-x-2">
+                    <span>Get My Resume</span>
+                    <i data-lucide="download" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
                 </a>
             </div>
         </div>
         
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer hover:scale-125 transition-transform">
-            <i data-lucide="chevron-down" class="w-10 h-10 text-white"></i>
+            <a href="#about"><i data-lucide="chevron-down" class="w-10 h-10 text-white"></i></a>
         </div>
     </section>
 
@@ -261,9 +262,6 @@
                     <button class="tab-button" data-tab="technologies">
                         <i data-lucide="code" class="w-5 h-5 inline mr-2"></i>Technologies
                     </button>
-                    <button class="tab-button" data-tab="achievements">
-                        <i data-lucide="trophy" class="w-5 h-5 inline mr-2"></i>Achievements
-                    </button>
                     <button class="tab-button" data-tab="gallery">
                         <i data-lucide="image" class="w-5 h-5 inline mr-2"></i>Gallery
                     </button>
@@ -314,14 +312,6 @@
                         <!-- Technologies will be populated by JavaScript -->
                     </div>
                 </div>
-                
-                <!-- Achievements Tab -->
-                <div id="tab-achievements" class="tab-content">
-                    <h4 class="text-2xl font-bold text-gray-900 dark:text-dark-text mb-6">Key Achievements</h4>
-                    <div id="modal-achievements" class="space-y-4">
-                        <!-- Achievements will be populated by JavaScript -->
-                    </div>
-                </div>
 
                 <!-- Gallery Tab -->
                 <div id="tab-gallery" class="tab-content">
@@ -334,27 +324,48 @@
 
             <!-- Lightbox -->
             <div id="lightbox" class="fixed inset-0 bg-black/90 z-[1000] flex items-center justify-center opacity-0 invisible transition-all duration-300">
-                <div class="relative max-w-[90%] max-h-[90%] flex items-center justify-center">
-                    <img id="lightbox-img" src="assets/placeholder.jpg" alt="Gallery Image" class="max-w-full max-h-full object-contain rounded-lg shadow-[0_25px_50px_rgba(0,0,0,0.5)] transition-opacity duration-300 opacity-0">
+                <div class="relative w-full h-full flex items-center justify-center p-4">
+                    <!-- Image Container with Zoom Support -->
+                    <div id="lightbox-img-container" class="relative w-full h-full flex items-center justify-center overflow-hidden">
+                        <img id="lightbox-img" src="" alt="Gallery Image" class="max-w-full max-h-full object-contain rounded-lg shadow-[0_25px_50px_rgba(0,0,0,0.5)] transition-all duration-300 opacity-0 select-none">
+                    </div>
 
                     <!-- Close Button -->
-                    <button id="lightbox-close" class="absolute top-5 right-5 w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:scale-110 text-white shadow-md">
+                    <button id="lightbox-close" class="absolute top-5 right-5 w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:scale-110 text-white shadow-md z-10">
                         <i data-lucide="x" class="w-6 h-6"></i>
                     </button>
 
                     <!-- Prev Button -->
-                    <button id="lightbox-prev" class="absolute left-5 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:scale-110 text-white shadow-md">
+                    <button id="lightbox-prev" class="absolute left-5 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:scale-110 text-white shadow-md z-10">
                         <i data-lucide="chevron-left" class="w-6 h-6"></i>
                     </button>
 
                     <!-- Next Button -->
-                    <button id="lightbox-next" class="absolute right-5 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:scale-110 text-white shadow-md">
+                    <button id="lightbox-next" class="absolute right-5 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:scale-110 text-white shadow-md z-10">
                         <i data-lucide="chevron-right" class="w-6 h-6"></i>
                     </button>
 
+                    <!-- Zoom Controls -->
+                    <div id="zoom-controls" class="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2 bg-black/70 backdrop-blur-md rounded-full px-4 py-2 shadow-md z-10">
+                        <button id="zoom-out" class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-all duration-200 hover:scale-110">
+                            <i data-lucide="minus" class="w-4 h-4"></i>
+                        </button>
+                        <button id="zoom-reset" class="px-3 py-2 rounded-full bg-white/20 hover:bg-white/30 text-white text-xs font-medium transition-all duration-200 hover:scale-105">
+                            100%
+                        </button>
+                        <button id="zoom-in" class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-all duration-200 hover:scale-110">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
                     <!-- Counter -->
-                    <div id="lightbox-counter" class="absolute bottom-5 left-1/2 -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm backdrop-blur-md shadow">
+                    <div id="lightbox-counter" class="absolute bottom-5 left-1/2 -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm backdrop-blur-md shadow z-10">
                         1 / 5
+                    </div>
+
+                    <!-- Zoom Level Indicator -->
+                    <div id="zoom-level" class="absolute top-5 left-5 bg-black/70 text-white px-3 py-1 rounded-full text-xs backdrop-blur-md shadow opacity-0 transition-opacity duration-300 z-10">
+                        100%
                     </div>
                 </div>
             </div>
@@ -454,17 +465,17 @@
                             </div>
                             <div>
                                 <h4 class="font-bold text-xl text-white">LinkedIn</h4>
-                                <a href="https://www.linkedin.com/in/farhan-fathur/" class="text-white/80 hover:text-white transition-colors text-lg">linkedin.com/in/farhan-fathur/</a>
+                                <a href="https://www.linkedin.com/in/farhan-fathur/" target="_blank" class="text-white/80 hover:text-white transition-colors text-lg">linkedin.com/in/farhan-fathur/</a>
                             </div>
                         </div>
                         
                         <div class="flex items-center space-x-6 hover-lift group cursor-pointer">
                             <div class="w-16 h-16 glass-effect rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                                <i data-lucide="globe" class="w-8 h-8 text-white"></i>
+                                <i data-lucide="github" class="w-8 h-8 text-white"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-xl text-white">Portfolio</h4>
-                                <a href="https://bit.ly/farhanfath-portfolio" class="text-white/80 hover:text-white transition-colors text-lg">bit.ly/farhanfath-portfolio</a>
+                                <h4 class="font-bold text-xl text-white">Github</h4>
+                                <a href="https://github.com/farhanfath/" target="_blank" class="text-white/80 hover:text-white transition-colors text-lg">github.com/farhanfath/</a>
                             </div>
                         </div>
                     </div>
