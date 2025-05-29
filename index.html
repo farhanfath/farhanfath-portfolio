@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/custom.css">
-    <script src="scripts/tailwind_config.js"></script>
+    <script type="module" src="scripts/tailwind-config.js"></script>
 </head>
 <body class="bg-gray-50 dark:bg-dark-bg transition-colors duration-300">
     <!-- Navigation -->
@@ -215,6 +215,9 @@
                 <button class="filter-btn px-8 py-4 rounded-full border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:border-black dark:hover:border-white transition-all duration-300 font-bold hover:scale-105" data-filter="ml">
                     <i data-lucide="brain" class="w-5 h-5 inline mr-2"></i>Machine Learning
                 </button>
+                <button class="filter-btn px-8 py-4 rounded-full border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:border-black dark:hover:border-white transition-all duration-300 font-bold hover:scale-105" data-filter="desktop">
+                    <i data-lucide="monitor" class="w-5 h-5 inline mr-2"></i>Desktop
+                </button>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10" id="projects-container">
@@ -321,11 +324,11 @@
             <!-- Modal Footer -->
             <div class="px-8 py-6 border-t border-gray-200 dark:border-dark-border flex justify-between items-center bg-gray-50 dark:bg-dark-bg">
                 <div class="flex space-x-4">
-                    <button class="flex items-center space-x-2 text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors hover:scale-105 font-semibold">
+                    <button id="view-code-btn" class="flex items-center space-x-2 text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors hover:scale-105 font-semibold">
                         <i data-lucide="github" class="w-5 h-5"></i>
                         <span>View Code</span>
                     </button>
-                    <button class="flex items-center space-x-2 text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors hover:scale-105 font-semibold">
+                    <button id="live-demo-btn" class="flex items-center space-x-2 text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors hover:scale-105 font-semibold">
                         <i data-lucide="external-link" class="w-5 h-5"></i>
                         <span>Live Demo</span>
                     </button>
@@ -462,6 +465,6 @@
         </div>
     </footer>
 
-    <script src="scripts/script.js"></script>
+    <script type="module" src="scripts/script.js"></script>
 </body>
 </html>
