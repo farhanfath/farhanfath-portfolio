@@ -279,7 +279,11 @@ export const projects = [
             "assets/projects/fourfold/9.png",
             "assets/projects/fourfold/10.png",
             "assets/projects/fourfold/11.png",
-            "assets/projects/fourfold/12.png"
+            "assets/projects/fourfold/12.png",
+            "assets/projects/fourfold/13.png",
+            "assets/projects/fourfold/14.png",
+            "assets/projects/fourfold/15.png",
+            "assets/projects/fourfold/16.png"
         ]
     },
     {
