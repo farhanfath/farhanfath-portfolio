@@ -13,12 +13,17 @@ function populateCertificates() {
         certElement.innerHTML = `
             <div class="certificate-preview">
                 <div class="w-20 h-20 rounded-full flex items-center justify-center text-white font-bold text-2xl" style="background-color: ${cert.color}">
-                    <i data-lucide="${cert.icon}" class="w-10 h-10"></i>
+                    ${
+                        cert.image
+                            ? `<img src="${cert.image}" alt="${cert.title}" class="absolute inset-0 w-full h-full object-cover rounded-t-xl opacity-50 group-hover:opacity-100 transition-opacity duration-300">`
+                            : `<i data-lucide="${cert.icon}" class="w-10 h-10"></i>`
+                    }
+                    
                 </div>
                 <div class="certificate-overlay">
-                    <button class="bg-white text-gray-900 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                    <a href="${cert.url}" target="_blank" rel="noopener noreferrer" class="bg-white text-gray-900 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-block">
                         View Certificate
-                    </button>
+                    </a>
                 </div>
             </div>
             <div class="certificate-content">
@@ -32,7 +37,6 @@ function populateCertificates() {
         `;
         container.appendChild(certElement);
     });
-    
     lucide.createIcons();
 }
 
