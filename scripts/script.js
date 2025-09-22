@@ -4,6 +4,7 @@ import { populateProjects, setupProjectFilters, setupProjectModal, setupProjects
 import { setupAboutToggle } from './controller/about-controller.js';
 import { typeWriter } from './controller/typing-text-controller.js';
 import { navigationController } from './controller/navigation-controller.js';
+import { SimpleStars } from './simple-stars.js';
 
 // Initialize Lucide icons
 lucide.createIcons();
@@ -55,9 +56,18 @@ ${message}`);
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize animated stars background
+    let starsBackground = null;
+    try {
+        starsBackground = new SimpleStars();
+        console.log('Stars background initialized successfully');
+    } catch (error) {
+        console.warn('Stars background failed to initialize:', error);
+    }
+
     // Start typing animation
     setTimeout(typeWriter, 1000);
-    
+
     // Initialize navigation controller
     navigationController();
 
@@ -65,19 +75,26 @@ document.addEventListener('DOMContentLoaded', function() {
     populateExperiences();
     populateProjects();
     populateCertificates();
-    
+
     // Setup functionality
     setupProjectFilters();
     setupProjectModal();
     setupToggleButtons();
-    
+
     // Observe all fade-in elements
     document.querySelectorAll('.fade-in').forEach(el => {
         observer.observe(el);
     });
-    
+
     // Refresh icons after all content is loaded
     setTimeout(() => {
         lucide.createIcons();
     }, 100);
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+        if (starsBackground) {
+            starsBackground.destroy();
+        }
+    });
 });
