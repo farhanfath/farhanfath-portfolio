@@ -8,6 +8,7 @@ export const experiences = [
         "achievements": [
             "Conducted R&D and implemented a Shopping Assistant feature using n8n to deliver personalized product recommendations within the app",
             "Developed and integrated a 21+ age-restricted product verification system using Clean Architecture to ensure maintainability and scalability",
+            "Refactored the E-Receipt feature from MVP to MVVM, integrating WebView with JSInterface while maintaining Clean Architecture principles to improve code readability and modularity"
         ],
         color: "#EA2729"
     },
