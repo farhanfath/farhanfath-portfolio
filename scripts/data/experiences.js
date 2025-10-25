@@ -6,9 +6,9 @@ export const experiences = [
         period: "Feb 2025 - Present",
         logo: "assets/company-logo/alfagift-icon.png",
         "achievements": [
-            "Conducted R&D and implemented a Shopping Assistant feature using n8n to deliver personalized product recommendations within the app",
+            "Researched and implemented a Shopping Assistant feature using automation workflow tools for personalized product recommendations.",
             "Developed and integrated a 21+ age-restricted product verification system using Clean Architecture to ensure maintainability and scalability",
-            "Refactored the E-Receipt feature from MVP to MVVM, integrating WebView with JSInterface while maintaining Clean Architecture principles to improve code readability and modularity"
+            "Refactored the E-Receipt feature from MVP to MVVM to improve code readability, modularity, and long-term maintainability."
         ],
         color: "#EA2729"
     },
