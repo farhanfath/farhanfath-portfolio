@@ -1,8 +1,8 @@
 export function setupAboutToggle() {
     const aboutToggle = document.getElementById('about-toggle');
     const aboutText = document.getElementById('about-text');
-    const fullAboutText = "I am a dedicated Informatics student at Gunadarma University and an Android Developer passionate about mobile technology. With a solid foundation in programming, a keen interest in solving real-world problems, and a drive to create impactful solutions, I am continuously learning and growing in the ever-evolving field of mobile development.";
-    const shortAboutText = "I am a dedicated Informatics student at Gunadarma University and an Android Developer passionate about mobile technology. With a solid foundation in programming, a keen interest in solving real-world problems...";
+    const fullAboutText = "Android Developer specializing in Kotlin, Jetpack Compose, and Clean Architecture. Experienced in building scalable, maintainable mobile applications with a focus on user experience and performance. Currently exploring Kotlin Multiplatform (KMP) to create unified cross-platform solutions. Passionate about continuous learning, automation, and crafting clean, modern UI experiences.";
+    const shortAboutText = "Android Developer specializing in Kotlin, Jetpack Compose, and Clean Architecture. Experienced in building scalable, maintainable mobile applications with a focus on user experience and performance...";
 
     let aboutExpanded = false;
     aboutText.textContent = shortAboutText;

@@ -3,9 +3,9 @@
 const typingText = document.getElementById('typing-text');
 const texts = [
     'Mobile Developer & IT Infrastructure Engineer',
-    'Android Developer with Kotlin & Jetpack Compose',
+    'Android Developer',
     'Course Instructor & Technology Enthusiast',
-    'Computer Science Student at Gunadarma University'
+    'Automation Enthusiast'
 ];
 let textIndex = 0;
 let charIndex = 0;
