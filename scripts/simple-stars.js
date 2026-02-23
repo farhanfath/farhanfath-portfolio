@@ -1,25 +1,28 @@
-// Simple Animated Stars Background
+/**
+ * FallingStars — A layered canvas animation:
+ *  - Background: small twinkling static stars
+ *  - Foreground: diagonal falling stars (shooting stars) with glowing tails
+ */
 class SimpleStars {
     constructor() {
         this.canvas = null;
         this.ctx = null;
-        this.stars = [];
-        this.mouse = { x: 0, y: 0 };
+        this.bgStars = [];       // Static twinkling background stars
+        this.fallingStars = [];  // Active falling/shooting stars
         this.animationId = null;
+        this.lastSpawn = 0;
+        this.spawnInterval = 600; // ms between new falling stars
 
-        console.log('SimpleStars: Starting initialization...');
         this.init();
-        this.createStars();
+        this.createBgStars();
         this.animate();
         this.setupEventListeners();
     }
 
     init() {
-        // Create canvas
         this.canvas = document.createElement('canvas');
         this.ctx = this.canvas.getContext('2d');
 
-        // Set canvas properties
         this.canvas.style.position = 'absolute';
         this.canvas.style.top = '0';
         this.canvas.style.left = '0';
@@ -27,153 +30,194 @@ class SimpleStars {
         this.canvas.style.height = '100%';
         this.canvas.style.zIndex = '1';
         this.canvas.style.pointerEvents = 'none';
-        this.canvas.style.opacity = '0.7';
+        this.canvas.style.opacity = '0.85';
 
-        // Add to hero section
         const heroSection = document.getElementById('home');
         if (heroSection) {
             heroSection.appendChild(this.canvas);
-            console.log('SimpleStars: Canvas added to hero section');
         }
 
         this.resize();
     }
 
-    createStars() {
-        this.stars = [];
-        const starCount = window.innerWidth < 768 ? 150 : 300;
-
-        for (let i = 0; i < starCount; i++) {
-            this.stars.push({
-                x: Math.random() * this.canvas.width,
-                y: Math.random() * this.canvas.height,
-                radius: Math.random() * 2 + 0.5,
-                originalRadius: Math.random() * 2 + 0.5,
-                speed: Math.random() * 0.5 + 0.1,
-                angle: Math.random() * Math.PI * 2,
-                twinkleSpeed: Math.random() * 0.02 + 0.01,
-                opacity: Math.random() * 0.8 + 0.2,
-                targetOpacity: Math.random() * 0.8 + 0.2
-            });
+    // ── Background Stars ─────────────────────────────────────────────────
+    createBgStars() {
+        this.bgStars = [];
+        const count = window.innerWidth < 768 ? 120 : 260;
+        for (let i = 0; i < count; i++) {
+            this.bgStars.push(this.newBgStar(true));
         }
-
-        console.log(`SimpleStars: Created ${this.stars.length} stars`);
     }
 
+    newBgStar(randomY = false) {
+        const radius = Math.random() * 1.4 + 0.3;
+        return {
+            x: Math.random() * this.canvas.width,
+            y: randomY ? Math.random() * this.canvas.height : 0,
+            radius,
+            baseRadius: radius,
+            opacity: Math.random() * 0.6 + 0.2,
+            targetOpacity: Math.random() * 0.7 + 0.3,
+            twinkleRate: Math.random() * 0.012 + 0.004,
+            twinklePhase: Math.random() * Math.PI * 2,
+        };
+    }
+
+    updateBgStar(star) {
+        // Twinkling
+        star.twinklePhase += star.twinkleRate;
+        star.opacity = 0.25 + 0.55 * (0.5 + 0.5 * Math.sin(star.twinklePhase));
+        star.radius = star.baseRadius * (0.85 + 0.3 * Math.sin(star.twinklePhase * 1.3));
+    }
+
+    drawBgStar(star) {
+        const ctx = this.ctx;
+        ctx.save();
+        ctx.globalAlpha = star.opacity;
+        ctx.fillStyle = '#ffffff';
+        ctx.shadowColor = '#c7d8ff';
+        ctx.shadowBlur = star.radius * 3;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
+
+    // ── Falling Stars ─────────────────────────────────────────────────────
+    spawnFallingStar() {
+        const w = this.canvas.width;
+        const h = this.canvas.height;
+        const isMobile = w < 768;
+
+        // Start from random point across top ~60% width, upper area
+        const startX = Math.random() * w * 1.2 - w * 0.1;
+        const startY = Math.random() * h * 0.3 - 20;
+
+        // Angle: mostly downward with slight diagonal (30°–60° from horizontal)
+        const angleDeg = 40 + Math.random() * 25;
+        const angleRad = (angleDeg * Math.PI) / 180;
+
+        const speed = (isMobile ? 4 : 5) + Math.random() * 4;
+        const length = (isMobile ? 60 : 90) + Math.random() * 80;
+        const width = 1.2 + Math.random() * 1.2;
+        const maxOpacity = 0.6 + Math.random() * 0.4;
+
+        return {
+            x: startX,
+            y: startY,
+            vx: Math.cos(angleRad) * speed,
+            vy: Math.sin(angleRad) * speed,
+            length,
+            width,
+            maxOpacity,
+            opacity: 0,
+            phase: 'fade-in', // fade-in → active → fade-out
+            life: 0,
+            maxLife: length / speed * 2, // frames to travel the full length + tail
+        };
+    }
+
+    updateFallingStar(star) {
+        star.x += star.vx;
+        star.y += star.vy;
+        star.life++;
+
+        const half = star.maxLife / 2;
+        if (star.life < half * 0.3) {
+            star.opacity = (star.life / (half * 0.3)) * star.maxOpacity;
+        } else if (star.life > star.maxLife * 0.7) {
+            const fadeProgress = (star.life - star.maxLife * 0.7) / (star.maxLife * 0.3);
+            star.opacity = star.maxOpacity * (1 - fadeProgress);
+        } else {
+            star.opacity = star.maxOpacity;
+        }
+    }
+
+    isOutOfBounds(star) {
+        return (
+            star.life > star.maxLife ||
+            star.x - star.length > this.canvas.width ||
+            star.y - star.length > this.canvas.height ||
+            star.opacity <= 0
+        );
+    }
+
+    drawFallingStar(star) {
+        if (star.opacity <= 0) return;
+        const ctx = this.ctx;
+
+        // Tail end (start of gradient, behind the head)
+        const tailX = star.x - star.vx / Math.hypot(star.vx, star.vy) * star.length;
+        const tailY = star.y - star.vy / Math.hypot(star.vx, star.vy) * star.length;
+
+        const grad = ctx.createLinearGradient(tailX, tailY, star.x, star.y);
+        grad.addColorStop(0, `rgba(255,255,255,0)`);
+        grad.addColorStop(0.6, `rgba(200,220,255,${(star.opacity * 0.4).toFixed(3)})`);
+        grad.addColorStop(1, `rgba(255,255,255,${star.opacity.toFixed(3)})`);
+
+        ctx.save();
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = star.width;
+        ctx.lineCap = 'round';
+        ctx.shadowColor = '#a0c4ff';
+        ctx.shadowBlur = 6;
+
+        ctx.beginPath();
+        ctx.moveTo(tailX, tailY);
+        ctx.lineTo(star.x, star.y);
+        ctx.stroke();
+
+        // Bright head glow
+        ctx.shadowBlur = 10;
+        ctx.globalAlpha = star.opacity;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.width * 0.9, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+    }
+
+    // ── Main Loop ─────────────────────────────────────────────────────────
     animate() {
-        this.animationId = requestAnimationFrame(() => this.animate());
+        this.animationId = requestAnimationFrame((ts) => this.animate(ts));
 
-        // Clear canvas
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        const ctx = this.ctx;
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        const time = Date.now() * 0.001;
-
-        this.stars.forEach((star, index) => {
-            // Gentle movement
-            star.x += Math.sin(time * star.speed + star.angle) * 0.3;
-            star.y += Math.cos(time * star.speed + star.angle) * 0.2;
-
-            // Wrap around screen
-            if (star.x < 0) star.x = this.canvas.width;
-            if (star.x > this.canvas.width) star.x = 0;
-            if (star.y < 0) star.y = this.canvas.height;
-            if (star.y > this.canvas.height) star.y = 0;
-
-            // Twinkling effect
-            star.opacity += (star.targetOpacity - star.opacity) * 0.02;
-            if (Math.abs(star.opacity - star.targetOpacity) < 0.01) {
-                star.targetOpacity = Math.random() * 0.8 + 0.2;
-            }
-
-            // Size variation for twinkling
-            star.radius = star.originalRadius + Math.sin(time * star.twinkleSpeed * 4) * 0.3;
-
-            // Mouse interaction - gentle push effect
-            const dx = star.x - this.mouse.x;
-            const dy = star.y - this.mouse.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < 100) {
-                const force = (100 - distance) / 100;
-                star.x += (dx / distance) * force * 0.5;
-                star.y += (dy / distance) * force * 0.5;
-            }
-
-            // Draw star
-            this.ctx.save();
-            this.ctx.globalAlpha = star.opacity;
-            this.ctx.fillStyle = '#ffffff';
-            this.ctx.shadowColor = '#ffffff';
-            this.ctx.shadowBlur = star.radius * 2;
-
-            this.ctx.beginPath();
-            this.ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-            this.ctx.fill();
-
-            // Add sparkle effect for larger stars
-            if (star.originalRadius > 1.5) {
-                this.ctx.globalAlpha = star.opacity * 0.3;
-                this.ctx.beginPath();
-                this.ctx.arc(star.x, star.y, star.radius * 3, 0, Math.PI * 2);
-                this.ctx.fill();
-            }
-
-            this.ctx.restore();
+        // Background stars
+        this.bgStars.forEach(star => {
+            this.updateBgStar(star);
+            this.drawBgStar(star);
         });
 
-        // Add some connecting lines between nearby stars (constellation effect)
-        this.drawConstellations();
-    }
-
-    drawConstellations() {
-        this.ctx.save();
-        this.ctx.strokeStyle = '#ffffff';
-        this.ctx.globalAlpha = 0.1;
-        this.ctx.lineWidth = 0.5;
-
-        for (let i = 0; i < this.stars.length; i++) {
-            for (let j = i + 1; j < this.stars.length; j++) {
-                const star1 = this.stars[i];
-                const star2 = this.stars[j];
-
-                const dx = star1.x - star2.x;
-                const dy = star1.y - star2.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-
-                // Only connect nearby stars
-                if (distance < 80 && Math.random() > 0.98) {
-                    this.ctx.beginPath();
-                    this.ctx.moveTo(star1.x, star1.y);
-                    this.ctx.lineTo(star2.x, star2.y);
-                    this.ctx.stroke();
-                }
+        // Spawn new falling stars periodically (random chance each frame)
+        const now = performance.now();
+        if (now - this.lastSpawn > this.spawnInterval) {
+            this.fallingStars.push(this.spawnFallingStar());
+            this.lastSpawn = now;
+            // Occasionally spawn a burst of 2
+            if (Math.random() < 0.25) {
+                setTimeout(() => {
+                    this.fallingStars.push(this.spawnFallingStar());
+                }, 150 + Math.random() * 250);
             }
         }
 
-        this.ctx.restore();
+        // Update & draw falling stars, cull finished ones
+        this.fallingStars = this.fallingStars.filter(star => {
+            this.updateFallingStar(star);
+            this.drawFallingStar(star);
+            return !this.isOutOfBounds(star);
+        });
     }
 
+    // ── Lifecycle ─────────────────────────────────────────────────────────
     setupEventListeners() {
-        // Mouse movement
-        window.addEventListener('mousemove', (event) => {
-            const rect = this.canvas.getBoundingClientRect();
-            this.mouse.x = event.clientX - rect.left;
-            this.mouse.y = event.clientY - rect.top;
-        });
-
-        // Window resize
         window.addEventListener('resize', () => {
             this.resize();
-            this.createStars(); // Recreate stars for new dimensions
-        });
-
-        // Touch events for mobile
-        window.addEventListener('touchmove', (event) => {
-            if (event.touches.length > 0) {
-                const rect = this.canvas.getBoundingClientRect();
-                this.mouse.x = event.touches[0].clientX - rect.left;
-                this.mouse.y = event.touches[0].clientY - rect.top;
-            }
+            this.createBgStars();
         });
     }
 
@@ -192,7 +236,6 @@ class SimpleStars {
         if (this.canvas && this.canvas.parentElement) {
             this.canvas.parentElement.removeChild(this.canvas);
         }
-        console.log('SimpleStars: Destroyed');
     }
 }
 
