@@ -3,6 +3,7 @@
 const typingText = document.getElementById('typing-text');
 const texts = [
     'Mobile Developer & IT Infrastructure Engineer',
+    'Software Engineer',
     'Android Developer',
     'Course Instructor & Technology Enthusiast',
     'Automation Enthusiast'
