@@ -1019,6 +1019,12 @@ body {
     transition: transform 0.3s ease;
 }
 
+/* In dark mode: use a bright white-tinted background instead of the accent color wash */
+.dark .exp-logo-wrap {
+    background: rgb(255, 255, 255) !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
 .experience-item:hover .exp-logo-wrap {
     transform: scale(1.08) rotate(2deg);
 }
