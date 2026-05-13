@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/custom.css">
     <script type="module" src="scripts/tailwind-config.js"></script>
 </head>
@@ -23,10 +23,16 @@
                 <div class="hidden md:flex space-x-8 items-center">
                     <a href="#home" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Home</a>
                     <a href="#about" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">About</a>
+                    <a href="#skills" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Skills</a>
                     <a href="#experience" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Experience</a>
                     <a href="#projects" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Projects</a>
                     <a href="#certifications" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Certifications</a>
                     <a href="#contact" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Contact</a>
+                    <!-- Terminal Toggle -->
+                    <button id="terminal-toggle" class="t-nav-btn">
+                        <i data-lucide="terminal" class="t-nav-btn-icon"></i>
+                        <span>&gt;_</span>
+                    </button>
                     <!-- Dark Mode Toggle -->
                     <button id="theme-toggle" class="p-3 rounded-xl bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 hover:scale-110">
                         <i data-lucide="sun" class="w-5 h-5 dark:hidden"></i>
@@ -34,6 +40,9 @@
                     </button>
                 </div>
                 <div class="md:hidden flex items-center space-x-2">
+                    <button id="terminal-toggle-mobile" class="t-nav-btn t-nav-btn--mobile">
+                        <i data-lucide="terminal" class="t-nav-btn-icon"></i>
+                    </button>
                     <button id="theme-toggle-mobile" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:scale-110 transition-transform">
                         <i data-lucide="sun" class="w-5 h-5 dark:hidden"></i>
                         <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
@@ -49,6 +58,7 @@
             <div class="px-4 py-3 space-y-1 max-h-screen overflow-y-auto">
                 <a href="#home" class="block py-3 text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg px-3 transition-all font-medium">Home</a>
                 <a href="#about" class="block py-3 text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg px-3 transition-all font-medium">About</a>
+                <a href="#skills" class="block py-3 text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg px-3 transition-all font-medium">Skills</a>
                 <a href="#experience" class="block py-3 text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg px-3 transition-all font-medium">Experience</a>
                 <a href="#projects" class="block py-3 text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg px-3 transition-all font-medium">Projects</a>
                 <a href="#certifications" class="block py-3 text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg px-3 transition-all font-medium">Certifications</a>
@@ -156,8 +166,32 @@
         </div>
     </section>
 
+    <!-- Skills Section -->
+    <section id="skills" class="py-16 sm:py-20 lg:py-24 bg-gray-50 dark:bg-dark-card transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16 lg:mb-20 fade-in">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 dark:text-dark-text mb-6">Technical Skills</h2>
+                <div class="w-20 sm:w-24 lg:w-32 h-2 bg-black dark:bg-white mx-auto rounded-full"></div>
+                <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-400 mt-6 max-w-2xl mx-auto px-4">
+                    Technologies and tools I work with daily
+                </p>
+                <!-- Proficiency Legend — visual chip key -->
+                <div class="skill-legend-simple fade-in">
+                    <span class="skill-legend-hint">Level →</span>
+                    <span class="skill-chip skill-chip--expert">Expert</span>
+                    <span class="skill-chip skill-chip--advanced">Advanced</span>
+                    <span class="skill-chip skill-chip--intermediate">Intermediate</span>
+                    <span class="skill-chip skill-chip--familiar">Familiar</span>
+                </div>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-5 sm:gap-6 items-start" id="skills-container">
+                <!-- Skills populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
     <!-- Experience Section -->
-    <section id="experience" class="py-16 sm:py-20 lg:py-24 bg-gray-50 dark:bg-dark-card transition-colors duration-300">
+    <section id="experience" class="py-16 sm:py-20 lg:py-24 bg-white dark:bg-dark-bg transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 sm:mb-16 lg:mb-20 fade-in">
                 <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 dark:text-dark-text mb-6">Work Experience</h2>
@@ -512,6 +546,34 @@
             </div>
         </div>
     </footer>
+
+    <!-- ── Terminal Overlay ────────────────────────────── -->
+    <div id="terminal-overlay" class="t-hidden">
+        <div id="terminal-window">
+            <!-- Title bar / Chrome -->
+            <div class="t-chrome">
+                <div class="t-traffic-lights">
+                    <button id="term-btn-close" class="t-dot t-dot-red"    title="Close"></button>
+                    <button class="t-dot t-dot-yellow" title="Minimize"></button>
+                    <button class="t-dot t-dot-green"  title="Maximize"></button>
+                </div>
+                <span class="t-chrome-title">farhan@portfolio: ~</span>
+                <button id="term-btn-close-x" class="t-close-x" title="Close">✕</button>
+            </div>
+            <!-- Output -->
+            <div id="terminal-output" class="t-output"></div>
+            <!-- Input row -->
+            <div class="t-input-row">
+                <span class="t-prompt">
+                    <span class="t-user">farhan</span><span class="t-sep">@</span><span class="t-host">portfolio</span><span class="t-colon">:~$&nbsp;</span>
+                </span>
+                <input id="terminal-input" class="t-input" type="text"
+                    autocomplete="off" spellcheck="false"
+                    autocorrect="off" autocapitalize="off"
+                    placeholder="type a command…">
+            </div>
+        </div>
+    </div>
 
     <script type="module" src="scripts/script.js"></script>
 </body>

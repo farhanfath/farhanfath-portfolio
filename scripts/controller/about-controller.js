@@ -1,8 +1,8 @@
 export function setupAboutToggle() {
     const aboutToggle = document.getElementById('about-toggle');
     const aboutText = document.getElementById('about-text');
-    const fullAboutText = "Software Engineer focused on building scalable and maintainable digital products. Strong experience in Kotlin-based development, system architecture, and modern UI frameworks. Experienced in designing clean, modular systems with emphasis on performance, automation, and long-term sustainability. Currently exploring cross-platform and orchestration-based solutions to build efficient, future-proof software ecosystems";
-    const shortAboutText = "Software Engineer focused on building scalable and maintainable digital products. Strong experience in Kotlin-based development, system architecture, and modern UI frameworks...";
+    const fullAboutText = "Android Engineer with 2+ years shipping production-grade features used by millions of Alfagift loyalty app users. I specialize in Kotlin & Jetpack Compose, designing clean MVVM architectures, integrating AI capabilities (Gemini, TensorFlow Lite), and running R&D on next-gen mobile experiences. Beyond mobile, I manage IT infrastructure — 7 servers, 144 thin clients, and VMware virtualization environments. Distinction Graduate of Bangkit Academy (Google × Gojek × Tokopedia × Traveloka) and a certified BNSP Junior Mobile Programmer. I don't just write code — I engineer impact.";
+    const shortAboutText = "Android Engineer with 2+ years shipping production-grade features used by millions of Alfagift loyalty app users. I specialize in Kotlin & Jetpack Compose, designing clean MVVM architectures and integrating AI capabilities...";
 
     let aboutExpanded = false;
     aboutText.textContent = shortAboutText;

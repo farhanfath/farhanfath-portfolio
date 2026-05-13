@@ -2,11 +2,11 @@
 // Typing animation
 const typingText = document.getElementById('typing-text');
 const texts = [
-    'Mobile Developer & IT Infrastructure Engineer',
-    'Software Engineer',
-    'Android Developer',
-    'Course Instructor & Technology Enthusiast',
-    'Automation Enthusiast'
+    'Android Engineer @ Alfagift',
+    'Building Apps Millions Use Daily',
+    'Kotlin · Jetpack Compose · AI Integration',
+    'Bangkit Academy Distinction Graduate',
+    'Mobile Dev + IT Infrastructure Specialist',
 ];
 let textIndex = 0;
 let charIndex = 0;

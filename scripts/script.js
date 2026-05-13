@@ -5,6 +5,8 @@ import { setupAboutToggle } from './controller/about-controller.js';
 import { typeWriter } from './controller/typing-text-controller.js';
 import { navigationController } from './controller/navigation-controller.js';
 import { SimpleStars } from './simple-stars.js';
+import { populateSkills } from './controller/skills-controller.js';
+import { Terminal } from './terminal.js';
 
 // Initialize Lucide icons
 lucide.createIcons();
@@ -72,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
     navigationController();
 
     // Populate sections
+    populateSkills();
     populateExperiences();
     populateProjects();
     populateCertificates();
@@ -90,6 +93,9 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         lucide.createIcons();
     }, 100);
+
+    // Initialize terminal
+    new Terminal().init();
 
     // Cleanup on page unload
     window.addEventListener('beforeunload', () => {
