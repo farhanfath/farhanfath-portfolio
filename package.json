@@ -4,8 +4,13 @@
     "tailwindcss": "^4.1.8"
   },
   "scripts": {
-    "build-css": "tailwindcss -i ./css/input.css -o ./css/output.css --watch",
+    "dev": "concurrently \"tailwindcss -i ./css/input.css -o ./css/output.css --watch\" \"browser-sync start --server --files '**/*.html, css/*.css, scripts/**/*.js' --no-notify --port 3000\"",
     "build": "tailwindcss -i ./css/input.css -o ./css/output.css --minify",
-    "dev": "tailwindcss -i ./css/input.css -o ./css/output.css --watch"
+    "css:watch": "tailwindcss -i ./css/input.css -o ./css/output.css --watch",
+    "serve": "browser-sync start --server --files '**/*.html, css/*.css, scripts/**/*.js' --no-notify --port 3000"
+  },
+  "devDependencies": {
+    "browser-sync": "^3.0.4",
+    "concurrently": "^9.2.1"
   }
 }

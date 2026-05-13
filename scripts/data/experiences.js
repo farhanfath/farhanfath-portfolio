@@ -9,9 +9,11 @@ export const experiences = [
                 title: "Android Engineer",
                 period: "Feb 2026 - Present",
                 achievements: [
-                    "Continuing development of scalable mobile features within a large-scale retail application.",
-                    "Contributing to architectural improvements and cross-team technical alignment.",
-                    "Supporting feature optimization and performance enhancements."
+                    "Architected and developed an enterprise-grade real-time Chat SDK from the ground up using MQTT as the underlying messaging protocol, enabling event-driven communication with low-latency message delivery at scale.",
+                    "Designed the SDK architecture following Screaming Architecture principles at the module level, ensuring high readability and domain-driven structure — allowing consumer teams to integrate and extend the SDK with minimal onboarding friction.",
+                    "Implemented an OTA (Over-the-Air) feature toggle mechanism backed by a custom internal service API, enabling dynamic enable/disable control of chat features without requiring app updates — reducing release risk and improving operational flexibility.",
+                    "Engineered the SDK for plug-and-play adoptability, abstracting internal complexity so end consumers can integrate real-time chat capabilities similar to using a ready-made third-party library.",
+                    "Contributed to the end-to-end delivery of the Chat SDK's initial production release, actively participating across development, QA testing cycles, and pre-release validation stages in coordination with the tech lead and QA team."
                 ]
             },
             {
