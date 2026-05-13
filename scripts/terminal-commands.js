@@ -291,7 +291,9 @@ export const commands = {
   <span class="t-dim">README.md</span>
   <span class="t-dim">.gitconfig</span>
 </div>
-<div class="t-dim t-spacer-sm">These are just for fun 😄 — use <span class="t-accent">help</span> for real commands.</div>`;
+<div class="t-dim t-spacer-sm">These are just for fun 😄 — use <span class="t-accent">help</span> for real commands.</div>
+<br/>
+`;
     },
 
     // ── date ──────────────────────────────────────────────

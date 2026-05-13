@@ -6,6 +6,7 @@ import { typeWriter } from './controller/typing-text-controller.js';
 import { navigationController } from './controller/navigation-controller.js';
 import { SimpleStars } from './simple-stars.js';
 import { populateSkills } from './controller/skills-controller.js';
+import { setupSkillMatch } from './controller/skill-match-controller.js';
 import { Terminal } from './terminal.js';
 
 // Initialize Lucide icons
@@ -75,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Populate sections
     populateSkills();
+    setupSkillMatch();
     populateExperiences();
     populateProjects();
     populateCertificates();
