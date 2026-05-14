@@ -13,6 +13,9 @@
     <script type="module" src="scripts/tailwind-config.js"></script>
 </head>
 <body class="bg-gray-50 dark:bg-dark-bg transition-colors duration-300">
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress-bar"></div>
+
     <!-- Navigation -->
     <nav id="main-nav" class="fixed top-0 w-full bg-white/95 dark:bg-dark-bg/95 backdrop-blur-md z-50 shadow-sm transition-all duration-500 hover:shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,6 +31,24 @@
                     <a href="#projects" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Projects</a>
                     <a href="#certifications" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Certifications</a>
                     <a href="#contact" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Contact</a>
+                    <!-- Tools Dropdown -->
+                    <div class="nav-dropdown" id="nav-tools-dropdown">
+                        <button class="nav-link nav-dropdown-trigger text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">
+                            Tools
+                            <i data-lucide="chevron-down" class="nav-dropdown-chevron w-3.5 h-3.5"></i>
+                        </button>
+                        <div class="nav-dropdown-menu">
+                            <button class="nav-dropdown-item" id="nav-skill-match-link">
+                                <i data-lucide="target" class="w-4 h-4"></i>
+                                Skill Match Calculator
+                            </button>
+                            <div class="nav-dropdown-divider"></div>
+                            <button class="nav-dropdown-item" id="nav-terminal-in-dropdown">
+                                <i data-lucide="terminal" class="w-4 h-4"></i>
+                                Terminal
+                            </button>
+                        </div>
+                    </div>
                     <!-- Terminal Toggle -->
                     <button id="terminal-toggle" class="t-nav-btn">
                         <i data-lucide="terminal" class="t-nav-btn-icon"></i>
@@ -59,6 +80,10 @@
                 <a href="#home" class="block py-3 text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg px-3 transition-all font-medium">Home</a>
                 <a href="#about" class="block py-3 text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg px-3 transition-all font-medium">About</a>
                 <a href="#skills" class="block py-3 text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg px-3 transition-all font-medium">Skills</a>
+                <button id="mobile-skill-match-btn" class="w-full text-left flex items-center gap-2 py-3 text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg px-3 transition-all font-medium">
+                    <i data-lucide="target" class="w-4 h-4 flex-shrink-0"></i>
+                    Skill Match Calculator
+                </button>
                 <a href="#experience" class="block py-3 text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg px-3 transition-all font-medium">Experience</a>
                 <a href="#projects" class="block py-3 text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg px-3 transition-all font-medium">Projects</a>
                 <a href="#certifications" class="block py-3 text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg px-3 transition-all font-medium">Certifications</a>
@@ -166,16 +191,16 @@
         </div>
     </section>
 
-    <!-- Skills Section -->
+    <!-- Skills Section (includes embedded Skill Match Calculator panel) -->
     <section id="skills" class="py-16 sm:py-20 lg:py-24 bg-gray-50 dark:bg-dark-card transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12 sm:mb-16 lg:mb-20 fade-in">
+            <div class="text-center mb-10 sm:mb-12 fade-in">
                 <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 dark:text-dark-text mb-6">Technical Skills</h2>
                 <div class="w-20 sm:w-24 lg:w-32 h-2 bg-black dark:bg-white mx-auto rounded-full"></div>
                 <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-400 mt-6 max-w-2xl mx-auto px-4">
                     Technologies and tools I work with daily
                 </p>
-                <!-- Proficiency Legend — visual chip key -->
+                <!-- Proficiency Legend -->
                 <div class="skill-legend-simple fade-in">
                     <span class="skill-legend-hint">Level →</span>
                     <span class="skill-chip skill-chip--expert">Expert</span>
@@ -183,15 +208,48 @@
                     <span class="skill-chip skill-chip--intermediate">Intermediate</span>
                     <span class="skill-chip skill-chip--familiar">Familiar</span>
                 </div>
+                <!-- Try Match CTA -->
+                <div class="try-match-cta fade-in">
+                    <button id="try-match-btn" class="try-match-btn">
+                        <span>Check Your Skill Fit</span>
+                        <i data-lucide="arrow-right" class="try-match-arrow"></i>
+                    </button>
+                    <p class="try-match-hint">Interactive tool for recruiters</p>
+                </div>
             </div>
-            <div class="grid sm:grid-cols-2 gap-5 sm:gap-6 items-start" id="skills-container">
-                <!-- Skills populated by JavaScript -->
+
+            <!-- Horizontal slider: Skills view ↔ Match Calculator view -->
+            <div class="skills-slider-wrap">
+                <div class="skills-slider-track" id="skills-slider-track">
+
+                    <!-- Slide A: Skills grid -->
+                    <div class="skills-slide">
+                        <div class="grid sm:grid-cols-2 gap-5 sm:gap-6 items-start" id="skills-container">
+                            <!-- Skills populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Slide B: Skill Match Calculator -->
+                    <div class="skills-slide">
+                        <div class="smc-back-row">
+                            <button id="smc-back-btn" class="smc-back-btn">
+                                <i data-lucide="arrow-left" style="width:1rem;height:1rem"></i>
+                                Back to Skills
+                            </button>
+                            <span class="smc-back-title">Skill Match Calculator</span>
+                        </div>
+                        <div id="skill-match-container">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="py-16 sm:py-20 lg:py-24 bg-white dark:bg-dark-bg transition-colors duration-300">
+    <section id="experience" class="py-16 sm:py-20 lg:py-24 bg-gray-50 dark:bg-dark-card transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 sm:mb-16 lg:mb-20 fade-in">
                 <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 dark:text-dark-text mb-6">Work Experience</h2>
@@ -238,11 +296,11 @@
                 <button class="filter-btn px-4 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 rounded-full border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:border-black dark:hover:border-white transition-all duration-300 font-bold hover:scale-105 text-sm sm:text-base" data-filter="web">
                     <i data-lucide="globe" class="w-4 h-4 sm:w-5 sm:h-5 inline mr-1 sm:mr-2"></i>Web
                 </button>
-                <button class="filter-btn px-4 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 rounded-full border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:border-black dark:hover:border-white transition-all duration-300 font-bold hover:scale-105 text-sm sm:text-base" data-filter="ml">
-                    <i data-lucide="brain" class="w-4 h-4 sm:w-5 sm:h-5 inline mr-1 sm:mr-2"></i>ML
-                </button>
                 <button class="filter-btn px-4 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 rounded-full border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:border-black dark:hover:border-white transition-all duration-300 font-bold hover:scale-105 text-sm sm:text-base" data-filter="desktop">
                     <i data-lucide="monitor" class="w-4 h-4 sm:w-5 sm:h-5 inline mr-1 sm:mr-2"></i>Desktop
+                </button>
+                <button class="filter-btn px-4 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 rounded-full border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:border-black dark:hover:border-white transition-all duration-300 font-bold hover:scale-105 text-sm sm:text-base" data-filter="other">
+                    <i data-lucide="blocks" class="w-4 h-4 sm:w-5 sm:h-5 inline mr-1 sm:mr-2"></i>Other
                 </button>
             </div>
 
@@ -472,43 +530,63 @@
                 <div class="fade-in">
                     <h3 class="text-3xl font-bold text-white mb-10">Contact Information</h3>
                     <div class="space-y-8">
-                        <div class="flex items-center space-x-6 hover-lift group cursor-pointer">
-                            <div class="w-16 h-16 glass-effect rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                        <div class="flex items-center space-x-6 hover-lift group">
+                            <div class="w-16 h-16 glass-effect rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 flex-shrink-0">
                                 <i data-lucide="phone" class="w-8 h-8 text-white"></i>
                             </div>
-                            <div>
+                            <div class="flex-1 min-w-0">
                                 <h4 class="font-bold text-xl text-white">Phone</h4>
-                                <p class="text-white/80 text-lg">(+62) 81352243681</p>
+                                <div class="flex items-center gap-3">
+                                    <p class="text-white/80 text-lg">(+62) 81352243681</p>
+                                    <button class="copy-btn opacity-0 group-hover:opacity-100" data-copy="+6281352243681" data-label="Phone number" aria-label="Copy phone number">
+                                        <i data-lucide="copy" class="w-4 h-4 text-white/70"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="flex items-center space-x-6 hover-lift group cursor-pointer">
-                            <div class="w-16 h-16 glass-effect rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+
+                        <div class="flex items-center space-x-6 hover-lift group">
+                            <div class="w-16 h-16 glass-effect rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 flex-shrink-0">
                                 <i data-lucide="mail" class="w-8 h-8 text-white"></i>
                             </div>
-                            <div>
+                            <div class="flex-1 min-w-0">
                                 <h4 class="font-bold text-xl text-white">Email</h4>
-                                <p class="text-white/80 text-lg">farhanfathur73@gmail.com</p>
+                                <div class="flex items-center gap-3">
+                                    <p class="text-white/80 text-lg">farhanfathur73@gmail.com</p>
+                                    <button class="copy-btn opacity-0 group-hover:opacity-100" data-copy="farhanfathur73@gmail.com" data-label="Email" aria-label="Copy email">
+                                        <i data-lucide="copy" class="w-4 h-4 text-white/70"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="flex items-center space-x-6 hover-lift group cursor-pointer">
-                            <div class="w-16 h-16 glass-effect rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+
+                        <div class="flex items-center space-x-6 hover-lift group">
+                            <div class="w-16 h-16 glass-effect rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 flex-shrink-0">
                                 <i data-lucide="linkedin" class="w-8 h-8 text-white"></i>
                             </div>
-                            <div>
+                            <div class="flex-1 min-w-0">
                                 <h4 class="font-bold text-xl text-white">LinkedIn</h4>
-                                <a href="https://www.linkedin.com/in/farhan-fathur/" target="_blank" class="text-white/80 hover:text-white transition-colors text-lg">linkedin.com/in/farhan-fathur/</a>
+                                <div class="flex items-center gap-3">
+                                    <a href="https://www.linkedin.com/in/farhan-fathur/" target="_blank" class="text-white/80 hover:text-white transition-colors text-lg">linkedin.com/in/farhan-fathur/</a>
+                                    <button class="copy-btn opacity-0 group-hover:opacity-100" data-copy="https://www.linkedin.com/in/farhan-fathur/" data-label="LinkedIn URL" aria-label="Copy LinkedIn URL">
+                                        <i data-lucide="copy" class="w-4 h-4 text-white/70"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="flex items-center space-x-6 hover-lift group cursor-pointer">
-                            <div class="w-16 h-16 glass-effect rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+
+                        <div class="flex items-center space-x-6 hover-lift group">
+                            <div class="w-16 h-16 glass-effect rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 flex-shrink-0">
                                 <i data-lucide="github" class="w-8 h-8 text-white"></i>
                             </div>
-                            <div>
+                            <div class="flex-1 min-w-0">
                                 <h4 class="font-bold text-xl text-white">Github</h4>
-                                <a href="https://github.com/farhanfath/" target="_blank" class="text-white/80 hover:text-white transition-colors text-lg">github.com/farhanfath/</a>
+                                <div class="flex items-center gap-3">
+                                    <a href="https://github.com/farhanfath/" target="_blank" class="text-white/80 hover:text-white transition-colors text-lg">github.com/farhanfath/</a>
+                                    <button class="copy-btn opacity-0 group-hover:opacity-100" data-copy="https://github.com/farhanfath/" data-label="GitHub URL" aria-label="Copy GitHub URL">
+                                        <i data-lucide="copy" class="w-4 h-4 text-white/70"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -574,6 +652,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Toast container (populated by JS) -->
+    <div id="toast-container"></div>
 
     <script type="module" src="scripts/script.js"></script>
 </body>

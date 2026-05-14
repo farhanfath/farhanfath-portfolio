@@ -1,4 +1,5 @@
 import { populateCertificates, setupCertificatesToggle } from './controller/certificate-controller.js';
+import { setupContactCopy } from './controller/contact-controller.js';
 import { populateExperiences, setupExperienceToggle } from './controller/experience-controller.js';
 import { populateProjects, setupProjectFilters, setupProjectModal, setupProjectsToggle } from './controller/project-controller.js';
 import { setupAboutToggle } from './controller/about-controller.js';
@@ -6,6 +7,7 @@ import { typeWriter } from './controller/typing-text-controller.js';
 import { navigationController } from './controller/navigation-controller.js';
 import { SimpleStars } from './simple-stars.js';
 import { populateSkills } from './controller/skills-controller.js';
+import { setupSkillMatch, setupSkillsSlider } from './controller/skill-match-controller.js';
 import { Terminal } from './terminal.js';
 
 // Initialize Lucide icons
@@ -75,6 +77,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Populate sections
     populateSkills();
+    setupSkillMatch();
+    setupSkillsSlider();
     populateExperiences();
     populateProjects();
     populateCertificates();
@@ -83,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupProjectFilters();
     setupProjectModal();
     setupToggleButtons();
+    setupContactCopy();
 
     // Observe all fade-in elements
     document.querySelectorAll('.fade-in').forEach(el => {
