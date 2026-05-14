@@ -6,6 +6,31 @@ export function navigationController() {
     // Navigation elements
     const nav = document.getElementById('main-nav');
     const goToTopBtn = document.getElementById('go-to-top');
+    const progressBar = document.getElementById('scroll-progress-bar');
+
+    // ── Scroll Spy setup ────────────────────────────────────────────────────
+    const sections   = Array.from(document.querySelectorAll('section[id]'));
+    const desktopLinks = Array.from(document.querySelectorAll('.hidden.md\\:flex .nav-link[href^="#"]'));
+
+    function updateScrollSpy() {
+        // Trigger line: 40% from top of viewport
+        const triggerY = window.scrollY + window.innerHeight * 0.4;
+        let activeId = sections[0]?.id ?? '';
+
+        for (const section of sections) {
+            if (triggerY >= section.offsetTop) {
+                activeId = section.id;
+            }
+        }
+
+        desktopLinks.forEach(link => {
+            const isActive = link.getAttribute('href') === `#${activeId}`;
+            link.classList.toggle('nav-active', isActive);
+        });
+    }
+
+    // Run once on load
+    updateScrollSpy();
 
     // Mobile menu toggle
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -14,6 +39,16 @@ export function navigationController() {
     // Scroll event listener for navigation hide/show
     window.addEventListener('scroll', function() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+        // ── Scroll progress bar ──────────────────────────────────────────
+        if (progressBar) {
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
+            progressBar.style.transform = `scaleX(${progress})`;
+        }
+
+        // ── Scroll spy ───────────────────────────────────────────────────
+        updateScrollSpy();
         
         // Show/hide go-to-top button
         if (scrollTop > 300) {
@@ -68,15 +103,52 @@ export function navigationController() {
     const currentTheme = localStorage.getItem('theme') || 'light';
     html.classList.toggle('dark', currentTheme === 'dark');
 
-    function toggleTheme() {
+    function applyThemeChange() {
         html.classList.toggle('dark');
         const isDark = html.classList.contains('dark');
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
         lucide.createIcons();
     }
 
-    themeToggle.addEventListener('click', toggleTheme);
-    themeToggleMobile.addEventListener('click', toggleTheme);
+    function toggleTheme(triggerEl) {
+        // Fallback: no View Transitions support → instant toggle
+        if (!document.startViewTransition) {
+            applyThemeChange();
+            return;
+        }
+
+        // Get ripple origin from the button that was clicked
+        const rect = triggerEl.getBoundingClientRect();
+        const x = rect.left + rect.width  / 2;
+        const y = rect.top  + rect.height / 2;
+
+        // Radius large enough to cover the farthest screen corner
+        const endRadius = Math.hypot(
+            Math.max(x, window.innerWidth  - x),
+            Math.max(y, window.innerHeight - y)
+        );
+
+        const transition = document.startViewTransition(applyThemeChange);
+
+        transition.ready.then(() => {
+            document.documentElement.animate(
+                {
+                    clipPath: [
+                        `circle(0px at ${x}px ${y}px)`,
+                        `circle(${endRadius}px at ${x}px ${y}px)`,
+                    ],
+                },
+                {
+                    duration: 450,
+                    easing: 'ease-in-out',
+                    pseudoElement: '::view-transition-new(root)',
+                }
+            );
+        });
+    }
+
+    themeToggle.addEventListener('click', () => toggleTheme(themeToggle));
+    themeToggleMobile.addEventListener('click', () => toggleTheme(themeToggleMobile));
 
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -98,4 +170,44 @@ export function navigationController() {
             nav.classList.remove('nav-hidden');
         }
     });
+
+    // ── Tools dropdown ──────────────────────────────────────────────────────
+    const toolsDropdown = document.getElementById('nav-tools-dropdown');
+    if (toolsDropdown) {
+        const trigger = toolsDropdown.querySelector('.nav-dropdown-trigger');
+
+        // Toggle open on trigger click
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toolsDropdown.classList.toggle('open');
+        });
+
+        // Close when clicking outside
+        document.addEventListener('click', () => {
+            toolsDropdown.classList.remove('open');
+        });
+
+        // "Skill Match Calculator" item → scroll to skills + open match view
+        const skillMatchLink = document.getElementById('nav-skill-match-link');
+        if (skillMatchLink) {
+            skillMatchLink.addEventListener('click', () => {
+                toolsDropdown.classList.remove('open');
+                const skillsEl = document.getElementById('skills');
+                if (skillsEl) skillsEl.scrollIntoView({ behavior: 'smooth' });
+                setTimeout(() => {
+                    window.dispatchEvent(new CustomEvent('open-skill-match'));
+                }, 650);
+            });
+        }
+
+        // "Terminal" item in dropdown → forward to terminal toggle button
+        const terminalDropdownItem = document.getElementById('nav-terminal-in-dropdown');
+        if (terminalDropdownItem) {
+            terminalDropdownItem.addEventListener('click', () => {
+                toolsDropdown.classList.remove('open');
+                const termBtn = document.getElementById('terminal-toggle');
+                if (termBtn) termBtn.click();
+            });
+        }
+    }
 }

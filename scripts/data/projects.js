@@ -226,7 +226,7 @@ export const projects = [
         id: 8,
         title: "OCR License Plate Recognition",
         subtitle: "License Plate Recognition using Google Vision OCR",
-        category: "ml",
+        category: "other",
         tags: ["Python", "OCR", "Google Vision"],
         description: "A Python application that uses Google Vision OCR to recognize license plates from images.",
         fullDescription: "A Python application that uses Google Vision OCR to recognize license plates from images. The app processes images, extracts text, and displays recognized license plate numbers.",

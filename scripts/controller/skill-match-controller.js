@@ -74,6 +74,39 @@ const CIRCUMFERENCE = 2 * Math.PI * 50; // r=50 → ~314.16
 let selected   = new Set(); // Set of lowercase skill keys
 let activePreset = null;
 
+// ── Slider: Skills ↔ Match view ────────────────────────────────────────────
+export function setupSkillsSlider() {
+    const track       = document.getElementById('skills-slider-track');
+    const tryMatchBtn = document.getElementById('try-match-btn');
+    const backBtn     = document.getElementById('smc-back-btn');
+    const mobileBtn   = document.getElementById('mobile-skill-match-btn');
+
+    if (!track) return;
+
+    function openMatchView() {
+        track.classList.add('match-mode');
+        lucide.createIcons();
+    }
+
+    function closeMatchView() {
+        track.classList.remove('match-mode');
+    }
+
+    if (tryMatchBtn) tryMatchBtn.addEventListener('click', openMatchView);
+    if (backBtn)     backBtn.addEventListener('click', closeMatchView);
+
+    if (mobileBtn) {
+        mobileBtn.addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.add('hidden');
+            document.getElementById('skills').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(openMatchView, 650);
+        });
+    }
+
+    // Listen for custom event fired by the nav dropdown
+    window.addEventListener('open-skill-match', openMatchView);
+}
+
 // ── Main entry ─────────────────────────────────────────────────────────────
 export function setupSkillMatch() {
     const container = document.getElementById('skill-match-container');

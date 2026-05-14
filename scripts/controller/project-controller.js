@@ -147,15 +147,15 @@ function populateProjects() {
         const gradientColors = {
             android: 'from-gray-800 to-black',
             web: 'from-gray-700 to-gray-900',
-            ml: 'from-gray-600 to-gray-800',
             desktop: 'from-gray-500 to-gray-700',
+            other: 'from-gray-600 to-gray-800',
         };
         
         const icons = {
             android: 'smartphone',  
             web: 'globe',
-            ml: 'brain',
             desktop: 'monitor',
+            other: 'blocks',
         };
         
         projectElement.innerHTML = `
